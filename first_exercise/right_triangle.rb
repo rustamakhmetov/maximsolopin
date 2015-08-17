@@ -12,13 +12,13 @@
 puts "Для определения, является ли прямоугольник равнобедренным, введите три стороны:"
 
 print "Первая: "
-a = Float(gets.chomp)
+a = gets.chomp.to_f
 
 print "Вторая: "
-b = Float(gets.chomp)
+b = gets.chomp.to_f
 
 print "Третья: "
-c = Float(gets.chomp)
+c = gets.chomp.to_f
 
 if a > b && a > c
     hypotenuse = a

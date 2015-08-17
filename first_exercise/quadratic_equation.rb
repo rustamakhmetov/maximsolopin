@@ -10,13 +10,13 @@
 puts "Решение квадратного уравнения"
 
 print "Введите a = "
-a = Float(gets.chomp)
+a = gets.chomp.to_f
 
 print "Введите b = "
-b = Float(gets.chomp)
+b = gets.chomp.to_f
 
 print "Введите c = "
-c = Float(gets.chomp)
+c = gets.chomp.to_f
 
 discriminant = b ** 2 - 4 * a * c
 

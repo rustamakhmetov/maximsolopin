@@ -8,7 +8,7 @@ puts "Введите свой имя"
 name = gets.chomp.capitalize
 
 puts "Введите ваш рост"
-height = Float(gets.chomp)
+height = gets.chomp.to_f
 
 perfect_weight = height - 110
 

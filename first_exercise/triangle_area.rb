@@ -6,10 +6,10 @@
 =end
 
 puts "Введите основание треугольника"
-a = Float(gets.chomp)
+a = gets.chomp.to_f
 
 puts "Введите высоту треугольника"
-h = Float(gets.chomp)
+h = gets.chomp.to_f
 
 triangle_area = 1 / 2.to_f * a * h
 puts "Площадь треугольника: #{triangle_area}"
