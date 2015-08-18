@@ -5,7 +5,7 @@
 number = []
 
 (10..100).step(5) do |n|
-    number.push n
+    number << n
 end
 
 puts number

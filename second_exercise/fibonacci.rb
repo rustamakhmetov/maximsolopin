@@ -6,11 +6,12 @@ b = 1
 c = 0
 fib_numbers = []
 
-begin
-    fib_numbers.push a + b
+
+until a + b >= 100 do
+    fib_numbers << a + b
     c = b;
     b += a;
     a = c
-end until a + b >= 100
+end
 
 puts fib_numbers
