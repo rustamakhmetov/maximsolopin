@@ -6,58 +6,61 @@ class RailwayStation
         @trains = []
     end
 
+    def trains
+        @trains
+    end
+
     def take_the_train(train)
-        @trains << train
+        trains << train
         puts "#{train} arrived at #{name} station."
     end
 
     def leave_the_train(train)
-        @trains.delete(train)
+        trains.delete(train)
         puts "#{train} has left the #{name} station."
     end
 
     def show_trains_on_station
-        @trains.each do |train|
+        trains.each do |train|
             puts "#{train.number}"
         end
     end
 end
 
-
 class Route
-    attr_accessor  :routes
+    attr_accessor  :stations
 
     def initialize
-        @routes = []
+        @stations = []
     end
 
-    def start_station
-        @routes.last
-    end
-
-    def end_station
-        @routes.first
+    def stations
+        @stations
     end
 
     def add_station(station)
-        @routes << station
+        stations << station
         puts "Added #{station.name}"
     end
 
     def del_station(station)
-        @routes.delete station
+        stations.delete station
         puts "Deleted #{station.name}"
+    end
+
+    def start_station
+        stations.last
+    end
+
+    def end_station
+        stations.first
     end
 
     def print_routes
         puts "Список станций"
-        @routes.each do |station|
+        stations.each do |station|
             puts "#{station.name}"
         end
-    end
-
-    def routes
-        return @routes
     end
 end
 
@@ -73,24 +76,56 @@ class Train
         @cur_index_station = 0
     end
 
+    def cur_index_station
+        @cur_index_station
+    end
+
+    def increase_index_station
+        @cur_index_station = @cur_index_station + 1
+    end
+
+    def next_station
+        @next_station
+    end
+
+    def wagons_number
+        @wagons_number
+    end
+
+    def increase_wagons_number
+        @wagons_number = @wagons_number + 1
+    end
+
+    def decrease_wagons_number
+        @wagons_number = @wagons_number - 1
+    end
+
+    def speed
+        @speed
+    end
+
+    def speed=(speed)
+        @speed = speed
+    end
+
     def go
-        self.speed = 60
+        speed = 60
         puts "Поезд тронулся"
         next_station
     end
 
     def stop
-        self.speed = 0
+        speed = 0
         puts "Поезд остановился"
     end
 
-    def speed?
-        return @speed
+    def train_moving?
+        speed > 0
     end
 
     def add_wagon
-        if speed? == 0
-            @wagons_number += 1
+        if !train_moving?
+            increase_wagons_number
             puts "Текущее кол-во вагонов #{@wagons_number}"
         else
             puts "Нельзя менять вагоны на ходу"
@@ -98,33 +133,37 @@ class Train
     end
 
     def remove_wagon
-        if speed? == 0
-            @wagons_number -= 1
+        if !train_moving?
+            decrease_wagons_number
             puts "Текущее кол-во вагонов #{@wagons_number}"
         else
             puts "Нельзя менять вагоны на ходу"
         end
     end
 
-    def add_route(routes)
-        @route = routes
+    def route=(route)
+        @route = route
+    end
+
+    def route
+        @route
     end
 
     def next_station
-        if @route.size == 0
+        if route.size == 0
             puts "Не задан маршрут"
         else
-            @cur_index_station += 1
-            @next_station = @route[@cur_index_station]
-            puts "Следующая станция #{@next_station.name}"
+            increase_index_station
+            next_station = route[cur_index_station]
+            puts "Следующая станция #{next_station.name}"
         end
     end
 
     def show_station
-        if @route.length == 0
+        if route.length == 0
             puts "Не задан маршрут"
         else
-            puts "Текущая станция #{@route[@cur_index_station].name}"
+            puts "Текущая станция #{route[cur_index_station].name}"
         end
     end
 end
@@ -141,7 +180,7 @@ route.add_station(piter)
 route.print_routes
 
 train = Train.new(315, 'passenger', 25)
-train.add_route(route.routes)
+train.route = route.stations
 train.go
 train.show_station
 train.add_wagon
