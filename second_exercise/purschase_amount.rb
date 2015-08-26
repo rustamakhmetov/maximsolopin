@@ -12,7 +12,7 @@
 =end
 total_price = 0.to_f
 
-goods = Hash.new { }
+goods = Hash.new
 
 loop do
     print "Введите название товара: "
@@ -20,7 +20,7 @@ loop do
 
     break if item_name == "стоп"
 
-    goods[item_name] = Hash.new { }
+    goods[item_name] = Hash.new
 
     print "Введите цену за ед. товара: "
     goods[item_name][:price] = gets.chomp.to_f
