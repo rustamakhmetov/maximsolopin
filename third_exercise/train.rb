@@ -5,7 +5,8 @@ class Train
         @number = number
         @speed = 0
         @cur_index_station = 0
-        @wagons = []
+        # @wagons = []
+        @wagons = Hash.new
     end
 
     def next_station

@@ -6,7 +6,7 @@ class PassangerTrain < Train
     def add_wagon(wagon)
         if wagon.wagon_type == "Passanger"
             if !train_moving?
-                @wagons << wagon
+                @wagons[wagon.number] = wagon
                 puts "Вагон добавлен"
             else
                 puts "Нельзя менять вагоны на ходу"
@@ -19,13 +19,13 @@ class PassangerTrain < Train
     def remove_wagon(wagon)
         if wagon.wagon_type == "Passanger"
             if !train_moving?
-                @wagons.delete wagon
-                puts "Вагон добавлен"
+                @wagons.delete(wagon.number)
+                puts "Вагон удален"
             else
                 puts "Нельзя менять вагоны на ходу"
             end
         else
-            puts "Нельзя добавить вагон!"
+            puts "Нельзя удалить вагон!"
         end
     end
 end
