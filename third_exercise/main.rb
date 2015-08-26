@@ -7,19 +7,19 @@ require_relative 'passanger_wagon'
 require_relative 'passanger_train'
 require_relative 'cargo_train'
 
-moskow = RailwayStation.new(1, "Moskow")
-piter = RailwayStation.new(2, "Piter")
-rnd = RailwayStation.new(3, "Rostov")
+# moskow = RailwayStation.new(1, "Moskow")
+# piter = RailwayStation.new(2, "Piter")
+# rnd = RailwayStation.new(3, "Rostov")
 
-route = Route.new
-route.add_station(rnd)
-route.add_station(moskow)
-route.add_station(piter)
-route.print_routes
+# route = Route.new
+# route.add_station(rnd)
+# route.add_station(moskow)
+# route.add_station(piter)
+# route.print_routes
 
-route.cur_station
-route.next_station
-route.next_station
+# route.cur_station
+# route.next_station
+# route.next_station
 # train = PassangerTrain.new(315)
 # train.route = route.stations
 # train.go
