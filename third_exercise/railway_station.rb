@@ -1,10 +1,12 @@
 class RailwayStation
     attr_accessor  :trains, :name, :number
+    @@all = []
 
     def initialize(number, name)
         @number = number
         @name = name
         @trains = []
+        @@all << self
     end
 
     def take_the_train(train)
@@ -38,4 +40,8 @@ class RailwayStation
         @trains
     end
 
+    def self.all
+        puts "All"
+        @@all
+    end
 end

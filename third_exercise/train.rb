@@ -1,12 +1,18 @@
+require_relative 'manufacturer'
+
 class Train
+    include Manufacturer
+
     attr_accessor :speed, :number
+
+    @@trains = Hash.new
 
     def initialize(number)
         @number = number
         @speed = 0
         @cur_index_station = 0
-        # @wagons = []
         @wagons = Hash.new
+        @@trains[number] = self
     end
 
     def next_station
@@ -86,6 +92,11 @@ class Train
         else
             puts "Нельзя удалить вагон!"
         end
+    end
+
+    def self.find(number)
+        puts "Find"
+        @@trains[number]
     end
 
     private
