@@ -44,14 +44,23 @@ class Interface
 
         train_var = gets.chomp.to_i
 
-        if train_var == 1
-            train_number = rand(100)
-            @trains[train_number] = CargoTrain.new(train_number)
-        elsif train_var == 2
-            train_number = rand(100)
-            @trains[train_number] = PassangerTrain.new(train_number)
-        else
-            puts "Нет такого типа поезда!"
+        begin
+            if train_var == 1
+
+                puts "Какой номер поезда?"
+                train_number = gets.chomp
+
+                @trains[train_number] = CargoTrain.new(train_number)
+            elsif train_var == 2
+                puts "Какой номер поезда?"
+                train_number = gets.chomp
+
+                @trains[train_number] = PassangerTrain.new(train_number)
+            else
+                puts "Нет такого типа поезда!"
+            end
+        rescue StandardError => e
+            puts "#{e.message}"
         end
     end
 

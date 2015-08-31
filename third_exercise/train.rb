@@ -5,7 +5,14 @@ class Train
 
     attr_accessor :speed, :number
 
+    NUMBER_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
+
     @@trains = Hash.new
+
+    def self.find(number)
+        puts "Find"
+        @@trains[number]
+    end
 
     def initialize(number)
         @number = number
@@ -13,6 +20,8 @@ class Train
         @cur_index_station = 0
         @wagons = Hash.new
         @@trains[number] = self
+
+        valid?
     end
 
     def next_station
@@ -94,9 +103,10 @@ class Train
         end
     end
 
-    def self.find(number)
-        puts "Find"
-        @@trains[number]
+    def valid?
+        validated, err_msg = validate!
+
+        raise err_msg if !validated
     end
 
     private
@@ -112,7 +122,22 @@ class Train
     def increase_index_station
         @cur_index_station = @cur_index_station + 1
     end
-end
 
+    def validate!
+        err_msg = ""
+
+        err_msg = "Номер не может быть пустым" if number.nil?
+        err_msg = "Номер не может быть меньше 3 символов" if number.length < 3
+        err_msg = "Неверный формат номер поезда" if number !~ NUMBER_FORMAT
+
+        if err_msg.length > 0
+            return false, err_msg
+        else
+
+            return true, ""
+        end
+    end
+
+end
 
 
