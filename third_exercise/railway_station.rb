@@ -2,10 +2,16 @@ class RailwayStation
     attr_accessor  :trains, :name, :number
     @@all = []
 
+    def self.all
+        puts "All"
+        @@all
+    end
+
     def initialize(number, name)
         @number = number
         @name = name
         @trains = []
+        validate!
         @@all << self
     end
 
@@ -34,14 +40,23 @@ class RailwayStation
         end
     end
 
+    def valid?
+        validate!
+    rescue
+        false
+    end
+
     private
 
     def trains
         @trains
     end
 
-    def self.all
-        puts "All"
-        @@all
+    def validate!
+        raise "Номер не может быть пустым" if number.nil?
+        raise "Номер не может быть меньше 3 символов" if number.length < 3
+        raise "Имя не может быть меньше 3 символов" if name.length < 3
+        true
     end
+
 end

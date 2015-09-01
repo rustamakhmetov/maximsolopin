@@ -3,14 +3,13 @@ require_relative 'manufacturer'
 class Train
     include Manufacturer
 
-    attr_accessor :speed, :number
+    attr_accessor :speed, :number, :wagons
 
     NUMBER_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
 
     @@trains = Hash.new
 
     def self.find(number)
-        puts "Find"
         @@trains[number]
     end
 
@@ -19,9 +18,8 @@ class Train
         @speed = 0
         @cur_index_station = 0
         @wagons = Hash.new
+        validate!
         @@trains[number] = self
-
-        valid?
     end
 
     def next_station
@@ -57,7 +55,7 @@ class Train
 
     def next_station
         if route.size == 0
-            puts "Не задан маршрут"
+            raise "Не задан маршрут"
         else
             increase_index_station
             next_station = route[cur_index_station]
@@ -67,26 +65,21 @@ class Train
 
     def show_station
         if route.length == 0
-            puts "Не задан маршрут"
+            raise "Не задан маршрут"
         else
             puts "Текущая станция #{route[cur_index_station].name}"
         end
-    end
-
-    def wagons
-        @wagons
     end
 
     def add_wagon(wagon)
         if wagon.wagon_type == train_type
             if !train_moving?
                 @wagons[wagon.number] = wagon
-                puts "Вагон добавлен"
             else
-                puts "Нельзя менять вагоны на ходу"
+                raise "Нельзя менять вагоны на ходу"
             end
         else
-            puts "Нельзя добавить вагон!"
+            raise "Нельзя добавить вагон с типом #{wagon.wagon_type} в #{train_type} поезд"
         end
     end
 
@@ -94,19 +87,18 @@ class Train
         if wagon.wagon_type == train_type
             if !train_moving?
                 @wagons.delete(wagon.number)
-                puts "Вагон удален"
             else
-                puts "Нельзя менять вагоны на ходу"
+                raise "Нельзя менять вагоны на ходу"
             end
         else
-            puts "Нельзя удалить вагон!"
+            raise "Нельзя добавить вагон с типом #{wagon.wagon_type} в #{train_type} поезд"
         end
     end
 
     def valid?
-        validated, err_msg = validate!
-
-        raise err_msg if !validated
+        validate!
+    rescue
+        false
     end
 
     private
@@ -124,18 +116,11 @@ class Train
     end
 
     def validate!
-        err_msg = ""
-
-        err_msg = "Номер не может быть пустым" if number.nil?
-        err_msg = "Номер не может быть меньше 3 символов" if number.length < 3
-        err_msg = "Неверный формат номер поезда" if number !~ NUMBER_FORMAT
-
-        if err_msg.length > 0
-            return false, err_msg
-        else
-
-            return true, ""
-        end
+        raise "Номер не может быть пустым" if number.nil?
+        raise "Номер не может быть меньше 3 символов" if number.length < 3
+        raise "Неверный формат номер поезда" if number !~ NUMBER_FORMAT
+        raise "Неуникальный номер поезда!" if !Train.find(number).nil?
+        true
     end
 
 end

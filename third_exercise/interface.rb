@@ -7,7 +7,7 @@ class Interface
 
     def start
         loop do
-            puts "1 Создать станцию\n2 Создать поезд\n3 Добавить вагон к поезду\n4 Отцепить вагон от поезда\n5 Поместить поезд на станцию\n6 Просмотреть список станций и список поездов на станции\n7 Выход"
+            puts "\n1 Создать станцию\n2 Создать поезд\n3 Добавить вагон к поезду\n4 Отцепить вагон от поезда\n5 Поместить поезд на станцию\n6 Просмотреть список станций и список поездов на станции\n7 Выход"
             var = gets.chomp.to_i
 
             break if var == 7
@@ -34,9 +34,15 @@ class Interface
     private
 
     def create_station
-        print "Введите название станции: "
-        station_number = rand(100)
-        @stations[station_number] = RailwayStation.new(station_number, gets.chomp)
+        begin
+            print "Введите название станции: "
+            station_name = gets.chomp
+            print "Введите номер станции: "
+            station_number = gets.chomp
+            @stations[station_number] = RailwayStation.new(station_number, station_name)
+        rescue StandardError => e
+            puts "#{e.message}"
+        end
     end
 
     def create_train
@@ -70,19 +76,23 @@ class Interface
             puts "#{train.number} - #{train.train_type}"
         end
 
-        train_number = gets.chomp.to_i
+        train_number = gets.chomp
         train = @trains[train_number]
 
         if train
-            puts "Какой тип вагона? 1 - Грузовой 2 - Пассажирский"
-            wagon_var = gets.chomp.to_i
+            begin
+                puts "Какой тип вагона? 1 - Грузовой 2 - Пассажирский"
+                wagon_var = gets.chomp.to_i
 
-            if wagon_var == 1 && train
-                train.add_wagon(CargoWagon.new(1))
-            elsif wagon_var == 2 && train
-                train.add_wagon(PassangerWagon.new(1))
-            else
-                puts "Ахтунг!"
+                raise "Неверный тип вагона" if not [1, 2].include?(wagon_var)
+
+                if wagon_var == 1 && train
+                    train.add_wagon(CargoWagon.new(1))
+                elsif wagon_var == 2 && train
+                    train.add_wagon(PassangerWagon.new(1))
+                end
+            rescue StandardError => e
+                puts "#{e.message}"
             end
         end
     end
@@ -97,14 +107,18 @@ class Interface
         train = @trains[train_number]
 
         if train
-            puts "Какой вагон? (номер) "
-            train.wagons.each do |number, wagon|
-                puts "Номер вагона #{number}"
-            end
+            begin
+                puts "Какой вагон? (номер) "
+                train.wagons.each do |number, wagon|
+                    puts "Номер вагона #{number}"
+                end
 
-            wagon_number = gets.chomp.to_i
-            wagon = train.wagons[wagon_number]
-            train.remove_wagon(wagon) if wagon
+                wagon_number = gets.chomp.to_i
+                wagon = train.wagons[wagon_number]
+                train.remove_wagon(wagon) if wagon
+            rescue StandardError => e
+                puts "#{e.message}"
+            end
         end
     end
 
