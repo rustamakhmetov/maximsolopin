@@ -15,18 +15,12 @@ class Route
     end
 
     def add_station(station)
-        validated, err_msg = validate!(station)
-        if validated
-            stations << station
-            puts "Добавлена станция #{station.name}"
-        else
-            puts err_msg
-        end
+        stations << station if validate!(station)
+
     end
 
     def del_station(station)
-        validate!(station)
-        stations.delete station
+        stations.delete station if validate!(station)
         puts "Удалена станция #{station.name}"
     end
 
@@ -63,13 +57,8 @@ class Route
     protected
 
     def validate!(station)
-        err_msg = "Станция не может быть пустой" if station.nil?
-        err_msg = "Class error!" unless station.class == RailwayStation
-
-        if err_msg.length > 0
-            return false, err_msg
-        else
-            return true, ''
-        end
+        raise "Станция не может быть пустой" if station.nil?
+        raise "Class error!" unless station.class == RailwayStation
+        true
     end
 end

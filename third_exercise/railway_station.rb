@@ -9,10 +9,17 @@ class RailwayStation
 
     def initialize(number, name)
         @number = number
+        puts @number.class
         @name = name
         @trains = []
         validate!
         @@all << self
+    end
+
+    def do_something(&block)
+        trains.each do |train|
+            block.call(train)
+        end
     end
 
     def take_the_train(train)

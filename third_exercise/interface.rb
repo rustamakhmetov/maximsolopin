@@ -39,6 +39,7 @@ class Interface
             station_name = gets.chomp
             print "Введите номер станции: "
             station_number = gets.chomp
+            puts station_number.class
             @stations[station_number] = RailwayStation.new(station_number, station_name)
         rescue StandardError => e
             puts "#{e.message}"

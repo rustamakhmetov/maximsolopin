@@ -22,6 +22,12 @@ class Train
         @@trains[number] = self
     end
 
+    def do_something(&block)
+        wagons.each do |number, wagon|
+            block.call(wagon)
+        end
+    end
+
     def next_station
         @next_station
     end
@@ -57,9 +63,9 @@ class Train
         if route.size == 0
             raise "Не задан маршрут"
         else
-            increase_index_station
             next_station = route[cur_index_station]
             puts "Следующая станция #{next_station.name}"
+            increase_index_station
         end
     end
 
