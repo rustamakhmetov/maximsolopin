@@ -1,4 +1,5 @@
 require_relative 'manufacturer'
+require_relative 'validation'
 
 class Train
     include Manufacturer
@@ -14,10 +15,13 @@ class Train
     end
 
     def initialize(number)
+        extend Validation
         @number = number
         @speed = 0
         @cur_index_station = 0
         @wagons = Hash.new
+        validate 'presence', @number
+        validate 'format', @number, NUMBER_FORMAT
         validate!
         @@trains[number] = self
     end
@@ -101,11 +105,11 @@ class Train
         end
     end
 
-    def valid?
-        validate!
-    rescue
-        false
-    end
+    # def valid?
+    #     validate!
+    # rescue
+    #     false
+    # end
 
     private
 
@@ -121,13 +125,13 @@ class Train
         @cur_index_station = @cur_index_station + 1
     end
 
-    def validate!
-        raise "Номер не может быть пустым" if number.nil?
-        raise "Номер не может быть меньше 3 символов" if number.length < 3
-        raise "Неверный формат номер поезда" if number !~ NUMBER_FORMAT
-        raise "Неуникальный номер поезда!" if !Train.find(number).nil?
-        true
-    end
+    # def validate!
+    #     raise "Номер не может быть пустым" if number.nil?
+    #     raise "Номер не может быть меньше 3 символов" if number.length < 3
+    #     raise "Неверный формат номер поезда" if number !~ NUMBER_FORMAT
+    #     raise "Неуникальный номер поезда!" if !Train.find(number).nil?
+    #     true
+    # end
 
 end
 
