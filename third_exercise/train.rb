@@ -1,12 +1,16 @@
 require_relative 'manufacturer'
-require_relative 'validation'
+require_relative 'validations'
 
 class Train
     include Manufacturer
+    include Validations
+
+    NUMBER_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
 
     attr_accessor :speed, :number, :wagons
 
-    NUMBER_FORMAT = /^([a-z]|\d){3}-?([a-z]|\d){2}$/i
+    validate 'presence', :number
+    validate 'format', :number, NUMBER_FORMAT
 
     @@trains = Hash.new
 
@@ -15,13 +19,12 @@ class Train
     end
 
     def initialize(number)
-        extend Validation
+
         @number = number
         @speed = 0
         @cur_index_station = 0
         @wagons = Hash.new
-        validate 'presence', @number
-        validate 'format', @number, NUMBER_FORMAT
+
         validate!
         @@trains[number] = self
     end

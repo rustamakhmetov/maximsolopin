@@ -1,26 +1,26 @@
-# require_relative 'attr_accessors'
+require_relative 'attr_accessors'
 
-#   extend AttrAccessors
-#   attr_accessor_with_history :a, :b
+  extend AttrAccessors
+  attr_accessor_with_history :a, :b
 
-# a = 3
-# b = 4
-# b_history
-
-
-#   strong_attr_accessor :c, "String"
+a = 3
+b = 4
+b_history
 
 
-#   strong_attr_accessor :d, "Integer"
-
-#     c = 10
-
-#     d = 10
+  strong_attr_accessor :c, "String"
 
 
-require_relative 'validation'
+  strong_attr_accessor :d, "Integer"
 
-extend Validation
+    c = 10
 
-validate 'presence', ''
-validate!
+    d = 10
+
+
+# require_relative 'validation'
+
+# extend Validation
+
+# validate 'presence', ''
+# validate!

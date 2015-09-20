@@ -1,4 +1,4 @@
-module Validation
+module Validations
     def validate(validation_type, value, validation_format = "")
         @validates ||= {}
         @validates[validation_type] = value
@@ -38,4 +38,5 @@ module Validation
     def type(var)
       raise "Неверный класс" unless var.class == @format
     end
+
 end
