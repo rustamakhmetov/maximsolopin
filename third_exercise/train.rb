@@ -9,8 +9,8 @@ class Train
 
     attr_accessor :speed, :number, :wagons
 
-    validate 'presence', :number
-    validate 'format', :number, NUMBER_FORMAT
+    validate :presence, :number
+    validate :format, :number, NUMBER_FORMAT
 
     @@trains = Hash.new
 
@@ -19,7 +19,6 @@ class Train
     end
 
     def initialize(number)
-
         @number = number
         @speed = 0
         @cur_index_station = 0
