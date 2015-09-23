@@ -19,6 +19,7 @@ class Train
     end
 
     def initialize(number)
+        instance_variable_set :@number, 0
         @number = number
         @speed = 0
         @cur_index_station = 0

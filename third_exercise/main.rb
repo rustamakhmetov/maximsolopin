@@ -25,6 +25,7 @@ route.print_routes
 # route.next_station
 # route.next_station
 train = PassangerTrain.new("abcab")
+train.validate!
 train.route = route.stations
 train.go
 
