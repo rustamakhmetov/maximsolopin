@@ -9,10 +9,10 @@ class RailwayStation
 
     def initialize(number, name)
         @number = number
-        puts @number.class
+        #puts @number.class
         @name = name
         @trains = []
-        validate!
+        #validate!
         @@all << self
     end
 

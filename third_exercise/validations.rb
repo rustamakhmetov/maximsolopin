@@ -17,10 +17,10 @@ module Validations
 
             #НЕЗНАЮ КАК ПОЛУЧИТЬ ЗНАЧЕНИЕ ПЕРЕМЕННОЙ #{value} (:number в данном случае)
             # puts self.instance_methods
-            puts self.class.instance_variable_get("@#{value}")
+            #puts self.class.instance_variable_get("@#{value}")
 
-            puts send self , "#{value}"
-            puts var
+            #puts send self , "#{value}"
+            #puts var
             # puts self.class.class_variable_get("#{value}")
             # puts self.class.instance_variable_get("#{value}")
             # puts class_variable_get("@@validations")
@@ -30,7 +30,7 @@ module Validations
     module InstanceMethods
         def validate!
             self.class.class_variable_get("@@validations").each do |type, value|
-                puts value
+                #puts value
                 send type, value
             end
             true
@@ -38,7 +38,8 @@ module Validations
 
         def valid?
             validate!
-        rescue
+        rescue RuntimeError => e
+            puts e.message
             false
         end
 
